@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+	<header>
+		<div class="container">
+		<div id="brandname">
+			ML App
+		</div>
+		<h2>StackOverFlow Tagger For Questions</h2>
+
+	</div>
+	</header>
+	<p style="color:blue;font-size:20;"><b>Tags Predicted for your Question:</b></p>
+	<div class="results">
+    {% if message %}
+    <h2 style="color:blue;"> {{ message }} </h2>
+	{% else %}
+	<h2 style="color:red;">No Tags Found!</h2>
+	{% endif %}
+
+    <button onclick="window.location.href = '{{ url_for('home')}}';">New question</button>
+
+	</div>
+
+</body>
+</html>
