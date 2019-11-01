@@ -1,11 +1,13 @@
 # -*-coding:utf-8 -*
+
+# Module tools for tokenizing step with CountVectorizer
 import nltk
 from nltk.stem.snowball import EnglishStemmer
 import re
 
 def myTokenizer(text):
     '''
-    Create tokens from text
+    Create tokens from text (English words > 3 letters)
     '''
     def stem_tokens(tokens, stemmer):
         '''
