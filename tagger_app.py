@@ -43,6 +43,7 @@ def home():
 @app.route('/predict',methods=['POST'])
 def predict():
     ### definitions : ###
+    PATH_EXPORT_FOLDER = 'data/'
     # model
     mdlFileName = 'mdl_cmp_RF_tags51_max_depthNone_max_features31_min_samples_split2_n_estimators25.pkl'
     # stop words
@@ -70,24 +71,24 @@ def predict():
         replace_punctuation = str.maketrans(string.punctuation,
             ' '*len(string.punctuation))
         # load stopwords
-        sw = joblib.load(stopWordsFileName)
+        sw = joblib.load(PATH_EXPORT_FOLDER + stopWordsFileName)
         # clean text
         message = cleaning_text(message, sw, replace_punctuation)
         #load CounterVectorizer
-        tf_vectorizer_sup_1 = joblib.load(countVectFileName)
+        tf_vectorizer_sup_1 = joblib.load(PATH_EXPORT_FOLDER + countVectFileName)
         # countvectorizing
         contVectValue = tf_vectorizer_sup_1.transform([message])
         # load  TfidfTransformer
-        tfidf_transformer_sup_1 = joblib.load(tfidfFileName)
+        tfidf_transformer_sup_1 = joblib.load(PATH_EXPORT_FOLDER + tfidfFileName)
         # tfidf
         tfIdfValue = tfidf_transformer_sup_1.transform(contVectValue)
         # load model
-        myModel = open(mdlFileName, 'rb')
+        myModel = open(PATH_EXPORT_FOLDER + mdlFileName, 'rb')
         clf = joblib.load(myModel)
         # predict
         encoded_y_pred = clf.predict(tfIdfValue)
         # load MultiLabelBinarizer
-        mlb = joblib.load(mlbFileName)
+        mlb = joblib.load(PATH_EXPORT_FOLDER + mlbFileName)
         # decode tags
         tu_tags = mlb.inverse_transform(encoded_y_pred)
         # check tags found ?
@@ -95,12 +96,12 @@ def predict():
         # if not, tray to predict with Unsupervised model
         if flag_tag_found == False:
             # load
-            df_topics_tags = joblib.load(dfTopicsTagsFileName)
+            df_topics_tags = joblib.load(PATH_EXPORT_FOLDER + dfTopicsTagsFileName)
             # load model
-            myModelUnsup = open(mdlUnsupFileName, 'rb')
+            myModelUnsup = open(PATH_EXPORT_FOLDER + mdlUnsupFileName, 'rb')
             model_lda = joblib.load(myModelUnsup)
             # load count vect
-            tf_vectorizer_1 = joblib.load(countVectUnsupFileName)
+            tf_vectorizer_1 = joblib.load(PATH_EXPORT_FOLDER + countVectUnsupFileName)
             # predict
             tu_tags[0] = find_tags_from_text(text=message,
                 tf_vectorizer=tf_vectorizer_1,
