@@ -45,7 +45,7 @@ def predict():
     ### definitions : ###
     PATH_EXPORT_FOLDER = 'data/'
     # model
-    mdlFileName = 'mdl_cmp_RF_tags51_max_depthNone_max_features31_min_samples_split2_n_estimators25.pkl'
+    mdlFileName = 'model_RF_tags51_max_depthNone_max_features31_min_samples_split2_n_estimators25.pkl'
     # stop words
     stopWordsFileName = 'stop_words_sw.pkl'
     # count vectorizer
